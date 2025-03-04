@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LinkedIn Puzzle Screenshot Tool</title>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 350px;
+      padding: 15px;
+    }
+    h1 {
+      font-size: 18px;
+      color: #0077B5;
+      margin-top: 0;
+    }
+    .section {
+      margin-bottom: 15px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #eee;
+    }
+    button {
+      background-color: #0077B5;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+    button:hover {
+      background-color: #005e93;
+    }
+    button:disabled {
+      background-color: #cccccc;
+      cursor: not-allowed;
+    }
+    input[type="file"] {
+      margin: 10px 0;
+      width: 100%;
+    }
+    #status {
+      margin-top: 15px;
+      padding: 10px;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+    }
+    .success {
+      color: green;
+    }
+    .error {
+      color: red;
+    }
+    .hidden {
+      display: none;
+    }
+    #progress-container {
+      margin-top: 10px;
+    }
+    progress {
+      width: 100%;
+      height: 20px;
+    }
+    .current-url {
+      word-break: break-all;
+      font-size: 12px;
+      margin: 5px 0;
+    }
+    .mode-select {
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>LinkedIn Puzzle Screenshot Tool</h1>
+  
+  <div class="section">
+    <p>Upload your spreadsheet containing LinkedIn puzzle URLs and metadata.</p>
+    <input type="file" id="spreadsheet-upload" accept=".csv,.xlsx,.xls">
+    <div id="file-info" class="hidden">
+      <p>Spreadsheet loaded: <span id="filename"></span></p>
+      <p>URLs found: <span id="url-count">0</span></p>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Operation Mode</h3>
+    <div class="mode-select">
+      <input type="radio" id="mode-current" name="mode" value="current" checked>
+      <label for="mode-current">Current page only</label>
+    </div>
+    <div class="mode-select">
+      <input type="radio" id="mode-auto" name="mode" value="auto">
+      <label for="mode-auto">Automatic (all URLs)</label>
+    </div>
+  </div>
+  
+  <div class="section">
+    <h3>Actions</h3>
+    <button id="take-screenshot" disabled>Take Screenshot</button>
+    <button id="start-auto" disabled>Start Auto-Mode</button>
+    <button id="stop-auto" disabled>Stop Auto-Mode</button>
+  </div>
+  
+  <div id="progress-container" class="hidden">
+    <p>Progress: <span id="progress-text">0/0</span></p>
+    <progress id="progress-bar" value="0" max="100"></progress>
+    <p class="current-url">Current URL: <span id="current-url">None</span></p>
+  </div>
+  
+  <div id="status" class="hidden"></div>
+  
+  <script src="lib/xlsx.full.min.js"></script>
+  <script src="lib/papaparse.min.js"></script>
+  <script src="html2canvas.min.js"></script>
+  <script src="popup.js"></script>
+</body>
+</html>
