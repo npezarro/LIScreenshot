@@ -12,7 +12,7 @@
   "web_accessible_resources": [
     {
       "resources": ["html2canvas.min.js", "lib/*"],
-      "matches": ["<all_urls>"]
+      "matches": ["*://*.linkedin.com/*"]
     }
   ],
   "host_permissions": [
