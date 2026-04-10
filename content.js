@@ -95,26 +95,42 @@ function addDataOverlay(puzzleData) {
   overlay.style.maxWidth = '300px';
   overlay.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
   
-  // Create content for overlay
-  let overlayContent = '<div style="font-weight: bold; font-size: 16px; margin-bottom: 10px;">Puzzle Information:</div>';
-  
+  // Create content for overlay using safe DOM APIs (no innerHTML)
+  const header = document.createElement('div');
+  header.style.fontWeight = 'bold';
+  header.style.fontSize = '16px';
+  header.style.marginBottom = '10px';
+  header.textContent = 'Puzzle Information:';
+  overlay.appendChild(header);
+
   // Add all properties from puzzleData
   if (puzzleData && Object.keys(puzzleData).length > 0) {
     for (const [key, value] of Object.entries(puzzleData)) {
       // Skip URL field
       if (key.toLowerCase() === 'url') continue;
-      
-      overlayContent += `<div style="margin: 5px 0;"><strong>${key}:</strong> ${value}</div>`;
+
+      const row = document.createElement('div');
+      row.style.margin = '5px 0';
+      const label = document.createElement('strong');
+      label.textContent = key + ':';
+      row.appendChild(label);
+      row.appendChild(document.createTextNode(' ' + value));
+      overlay.appendChild(row);
     }
   } else {
-    overlayContent += '<div>No data available for this puzzle.</div>';
+    const noData = document.createElement('div');
+    noData.textContent = 'No data available for this puzzle.';
+    overlay.appendChild(noData);
   }
-  
+
   // Add timestamp
   const timestamp = new Date().toLocaleString();
-  overlayContent += `<div style="margin-top: 10px; font-size: 12px; color: #666;">Captured: ${timestamp}</div>`;
-  
-  overlay.innerHTML = overlayContent;
+  const tsDiv = document.createElement('div');
+  tsDiv.style.marginTop = '10px';
+  tsDiv.style.fontSize = '12px';
+  tsDiv.style.color = '#666';
+  tsDiv.textContent = 'Captured: ' + timestamp;
+  overlay.appendChild(tsDiv);
   document.body.appendChild(overlay);
   
   return overlay;
